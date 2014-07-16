@@ -9,7 +9,7 @@
      android:layout_width="fill_parent"
      android:layout_height="wrap_content"
      android:text=""
-     android:textSize="40dip"
+     android:textSize="40sp"
      android:textColor="#f39800"
      android:gravity="right"
      android:background="#999999"

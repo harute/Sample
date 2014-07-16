@@ -1,5 +1,6 @@
 package com.example.calc;
 
+import android.R.integer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -79,6 +80,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
+        TextView viewText = (TextView)findViewById(R.id.display);
+
         // 押されたボタンがどのボタンかを判定
         for (int i = 0; i < mId.length; i++) {
             if (view.equals(mButton[i])) {
@@ -88,12 +91,37 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     total = 0;
                     beforeStatus = KEY_CLEAR;
                 }
+                // プラス
+                else if (i == KEY_PLUS) {
+                    total = Integer.parseInt(mTextView.getText().toString());
+                    mTextView.setText("");
+                    beforeStatus = KEY_PLUS;
+                }
+                // マイナス
+                else if (i == KEY_MINUS) {
+                    total = Integer.parseInt(mTextView.getText().toString());
+                    mTextView.setText("");
+                    beforeStatus = KEY_MINUS;
+                }
+                else if (i == KEY_EQUAL) {
+                    if (beforeStatus == KEY_PLUS) {
+                        int result = total + Integer.parseInt(mTextView.getText().toString());
+                        viewText.setText(String.valueOf(result));
+                        total = 0;
+                        beforeStatus = 0;
+                    } else if (beforeStatus == KEY_MINUS) {
+                        int result = total - Integer.parseInt(mTextView.getText().toString());
+                        viewText.setText(String.valueOf(result));
+                        total = 0;
+                        beforeStatus = 0;
+                    }
+                }
                 // 数字
                 else if (i < 10) {
                     String nowValue = mTextView.getText().toString();
                     nowValue = nowValue + i;
                     mTextView.setText(nowValue);
-                    beforeStatus = i;
+                    // beforeStatus = i;
                 }
                 break;
             }
