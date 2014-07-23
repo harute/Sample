@@ -45,15 +45,18 @@ public class MainActivity extends Activity {
                 Map<String, String> data = new HashMap<String, String>();
                 data.put("no", Common.getNo(sampleRow.no, sampleRow.rare));
                 data.put("name", sampleRow.name);
-                data.put("other", sampleRow.lv);
+                data.put("other2", "最大Lv." + sampleRow.lv);
+                data.put("other3", "HP " + sampleRow.hp);
+                data.put("other4", "攻撃 " + sampleRow.attack);
+                data.put("other5", "回復 " + sampleRow.recovery);
                 retDataList.add(data);
                 //Log.d("Tag", "test3");
             }
 
             // リストビューに渡すアダプタを生成します。
             SimpleAdapter adapter2 = new SimpleAdapter(this, retDataList,
-                    R.layout.raw, new String[] { "no", "name" ,"other"},
-                    new int[] {R.id.textView1, R.id.textView2 , R.id.textView3});
+                    R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
+                    new int[] {R.id.textView1, R.id.textView2 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
 
             // アダプタを設定します。
             listView.setAdapter(adapter2);
