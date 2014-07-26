@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -37,6 +40,17 @@ public class MainActivity extends Activity implements TextWatcher {
 
         // リスナーを仕込むエディットボックス
         this.mEditText = (EditText)this.findViewById(R.id.editText1);
+        mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                // EditTextのフォーカスが外れた場合
+                if (hasFocus == false) {
+                 // ソフトキーボードを非表示にする
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+        });
         this.mEditText.addTextChangedListener(this);
 
         Http.Request request = new Http.Request();
@@ -95,7 +109,7 @@ public class MainActivity extends Activity implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        // TODO 自動生成されたメソッド・スタブ
+        // TODO 2回呼ばれる
         List<Map<String, String>> retDataList = new ArrayList<Map<String, String>>();
         if (s.toString() != "") {
             // ここでテキスト変更後の処理
@@ -121,17 +135,14 @@ public class MainActivity extends Activity implements TextWatcher {
                     new int[] {R.id.textView1, R.id.textView2 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
 
             // アダプタを設定します。
-            listView.setAdapter(null);
             listView.setAdapter(adapter2);
         } else {
-          //Log.d("tag", "test");
             // リストビューに渡すアダプタを生成します。
             SimpleAdapter adapter2 = new SimpleAdapter(this, baseRetDataList,
                     R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
                     new int[] {R.id.textView1, R.id.textView2 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
 
             // アダプタを設定します。
-            listView.setAdapter(null);
             listView.setAdapter(adapter2);
         }
     }
