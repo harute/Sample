@@ -91,31 +91,26 @@ public class MainActivity extends Activity implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         // TODO 自動生成されたメソッド・スタブ
+    }
 
-        Log.d("tag", "base=" + s.toString());
-        Log.d("tag", "base2=" + s.toString());
-        String str = mEditText.getText().toString();
-        //Log.d("tag", "start:" + start + " before:" + before + " count:" + count);
-
+    @Override
+    public void afterTextChanged(Editable s) {
+        // TODO 自動生成されたメソッド・スタブ
         List<Map<String, String>> retDataList = new ArrayList<Map<String, String>>();
-        if (str.length() == before) {
-         // ここでテキスト変更後の処理
-            if (str.length() == 0) {
-                retDataList = baseRetDataList;
-            } else {
-                for (Sample sampleRow : baseSampleList) {
-                    //Log.d("tag", "base=" + s.toString());
-                    if (sampleRow.name.indexOf(s.toString()) > -1) {
-                        data = new HashMap<String, String>();
-                        data.put("no", Common.getNo(sampleRow.no, sampleRow.rare));
-                        data.put("name", sampleRow.name);
-                        data.put("other2", "最大Lv." + sampleRow.lv);
-                        data.put("other3", "HP " + sampleRow.hp);
-                        data.put("other4", "攻撃 " + sampleRow.attack);
-                        data.put("other5", "回復 " + sampleRow.recovery);
-                        Log.d("tag", "result=" + sampleRow.name);
-                        retDataList.add(data);
-                    }
+        if (s.toString() != "") {
+            // ここでテキスト変更後の処理
+            for (Sample sampleRow : baseSampleList) {
+                //Log.d("tag", "base=" + s.toString());
+                if (sampleRow.name.indexOf(s.toString()) > -1) {
+                    data = new HashMap<String, String>();
+                    data.put("no", Common.getNo(sampleRow.no, sampleRow.rare));
+                    data.put("name", sampleRow.name);
+                    data.put("other2", "最大Lv." + sampleRow.lv);
+                    data.put("other3", "HP " + sampleRow.hp);
+                    data.put("other4", "攻撃 " + sampleRow.attack);
+                    data.put("other5", "回復 " + sampleRow.recovery);
+                    //Log.d("tag", "result=" + sampleRow.name);
+                    retDataList.add(data);
                 }
             }
 
@@ -129,24 +124,16 @@ public class MainActivity extends Activity implements TextWatcher {
             listView.setAdapter(null);
             listView.setAdapter(adapter2);
         } else {
-            if (count == 0) {
-                //Log.d("tag", "test");
-                // リストビューに渡すアダプタを生成します。
-                SimpleAdapter adapter2 = new SimpleAdapter(this, baseRetDataList,
-                        R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
-                        new int[] {R.id.textView1, R.id.textView2 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
+          //Log.d("tag", "test");
+            // リストビューに渡すアダプタを生成します。
+            SimpleAdapter adapter2 = new SimpleAdapter(this, baseRetDataList,
+                    R.layout.raw, new String[] { "no", "name" ,"other2", "other3","other4","other5"},
+                    new int[] {R.id.textView1, R.id.textView2 , R.id.textView4, R.id.textView5, R.id.textView6, R.id.textView7});
 
-                // アダプタを設定します。
-                listView.setAdapter(null);
-                listView.setAdapter(adapter2);
-            }
+            // アダプタを設定します。
+            listView.setAdapter(null);
+            listView.setAdapter(adapter2);
         }
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        // TODO 自動生成されたメソッド・スタブ
-
     }
 }
 
