@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
         setImageButton(R.id.imgbtn_id02, "002.png");
         setImageButton(R.id.imgbtn_id03, "003.png");
         setImageButton(R.id.imgbtn_id04, "004.png");
-        setImageButton(R.id.imgbtn_id05, "001.png");
+        setImageButton(R.id.imgbtn_id05, "002.png");
         setImageButton(R.id.imgbtn_id06, "002.png");
 
     }
