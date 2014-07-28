@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,6 +28,8 @@ public class MainActivity extends Activity {
         //StrictModeを設定 penaltyDeathを取り除く
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
 
+        // ウィンドウタイトルバー非表示
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         getDisplay();
@@ -35,6 +39,24 @@ public class MainActivity extends Activity {
         setImageButton(R.id.imgbtn_id04, "004.png");
         setImageButton(R.id.imgbtn_id05, "002.png");
         setImageButton(R.id.imgbtn_id06, "002.png");
+
+        // ボタン押下時に画面遷移
+        ImageButton btn = (ImageButton)findViewById(R.id.imgbtn_id01);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Tag", "OKOK");
+            }
+        });
+
+        // ボタン押下時に画面遷移
+        ImageButton btn2 = (ImageButton)findViewById(R.id.imgbtn_id02);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Tag", "OKOK222");
+            }
+        });
 
     }
 
