@@ -1,9 +1,14 @@
 package com.example.imagebtnsample;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,13 +18,20 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
     int width;
     int height;
+
+    static List<AppInfo> items = new ArrayList<AppInfo>();
+    static AppInfoArrayAdapter adapter;
+
+    ListView listView1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +69,38 @@ public class MainActivity extends Activity {
                 Log.d("Tag", "OKOK222");
             }
         });
+
+        // ここからList処理
+        listView1 = (ListView)findViewById(R.id.listView1);
+
+        String[][] lst = {
+                {"11111111111111111111111111111111111111111aaaaaaaaaaaaaa", "http://pazu-test.but.jp/image/004.png"},
+                {"OK", "http://pazu-test.but.jp/image/003.png"},
+                {"NG", "http://pazu-test.but.jp/image/002.png"},
+                {"NG1345", "http://pazu-test.but.jp/image/001.png"}
+        };
+        // ここで繰り返し処理
+        //入力ストリームを開く
+        InputStream istream;
+        try {
+            for (int i = 0; i < lst.length; i++) {
+                URL url = new URL(lst[i][1]);
+                istream = url.openStream();
+                Drawable d = Drawable.createFromStream(istream, "webimg");
+                AppInfo bbb = new AppInfo();
+                bbb.setTextData(lst[i][0]);
+                bbb.setImagaData(d);
+                items.add(bbb);
+            }
+        } catch (IOException e) {
+            // TODO 自動生成された catch ブロック
+            e.printStackTrace();
+        }
+
+
+        //adapter = new AppInfoArrayAdapter(this, R.layout.raw, R.id.row_textview1, items);
+        adapter = new AppInfoArrayAdapter(this, R.layout.raw, items);
+        listView1.setAdapter(adapter);
 
     }
 
